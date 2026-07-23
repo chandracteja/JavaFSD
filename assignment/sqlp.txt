@@ -1,229 +1,404 @@
 -- 1. Create a database
 CREATE DATABASE college_db;
+Query OK, 1 row affected (0.02 sec)
+
 
 -- 2. Select the database
 USE college_db;
+Database changed
 
 -- 3. Delete students table if it already exists
 DROP TABLE IF EXISTS students;
+Query OK, 0 rows affected, 1 warning (0.01 sec)
+
 
 -- 4. Create Students table
 CREATE TABLE students(
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    email VARCHAR(100) UNIQUE NOT NULL,
-    phone VARCHAR(15),
-    date_of_birth DATE,
-    is_active BOOLEAN DEFAULT TRUE,
-    marks DECIMAL(5,2) CHECK (marks >= 0 AND marks <= 100),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+    ->     id INT AUTO_INCREMENT PRIMARY KEY,
+    ->     name VARCHAR(100) NOT NULL,
+    ->     email VARCHAR(100) UNIQUE NOT NULL,
+    ->     phone VARCHAR(15),
+    ->     date_of_birth DATE,
+    ->     is_active BOOLEAN DEFAULT TRUE,
+    ->     marks DECIMAL(5,2) CHECK (marks >= 0 AND marks <= 100),
+    ->     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    -> );
+Query OK, 0 rows affected (0.06 sec)
+
 
 -- 5. Display all tables
 SHOW TABLES;
++----------------------+
+| Tables_in_college_db |
++----------------------+
+| students             |
++----------------------+
+1 row in set (0.01 sec)
+
 
 -- 6. Display structure of students table
 DESCRIBE students;
++---------------+--------------+------+-----+-------------------+-------------------+
+| Field         | Type         | Null | Key | Default           | Extra             |
++---------------+--------------+------+-----+-------------------+-------------------+
+| id            | int          | NO   | PRI | NULL              | auto_increment    |
+| name          | varchar(100) | NO   |     | NULL              |                   |
+| email         | varchar(100) | NO   | UNI | NULL              |                   |
+| phone         | varchar(15)  | YES  |     | NULL              |                   |
+| date_of_birth | date         | YES  |     | NULL              |                   |
+| is_active     | tinyint(1)   | YES  |     | 1                 |                   |
+| marks         | decimal(5,2) | YES  |     | NULL              |                   |
+| created_at    | timestamp    | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED |
++---------------+--------------+------+-----+-------------------+-------------------+
+8 rows in set (0.00 sec)
+
 
 -- 7. Insert student records
 INSERT INTO students(name,email,phone,date_of_birth,marks)
-VALUES
-('Rahul','rahul@gmail.com','9876543210','2004-05-10',91.50);
+    -> VALUES
+    -> ('Rahul','rahul@gmail.com','9876543210','2004-05-10',91.50);
+Query OK, 1 row affected (0.01 sec)
+
 
 INSERT INTO students(name,email,phone,date_of_birth,marks)
-VALUES
-('Priya','priya@gmail.com','9876543211','2003-08-15',88.25);
+    -> VALUES
+    -> ('Priya','priya@gmail.com','9876543211','2003-08-15',88.25);
+Query OK, 1 row affected (0.01 sec)
+
 
 INSERT INTO students(name,email,phone,date_of_birth,marks)
-VALUES
-('Arjun','arjun@gmail.com','9876543212','2002-12-05',76.75);
+    -> VALUES
+    -> ('Arjun','arjun@gmail.com','9876543212','2002-12-05',76.75);
+Query OK, 1 row affected (0.01 sec)
+
 
 -- 8. Display all records
 SELECT * FROM students;
++----+-------+-----------------+------------+---------------+-----------+-------+---------------------+
+| id | name  | email           | phone      | date_of_birth | is_active | marks | created_at          |
++----+-------+-----------------+------------+---------------+-----------+-------+---------------------+
+|  1 | Rahul | rahul@gmail.com | 9876543210 | 2004-05-10    |         1 | 91.50 | 2026-07-23 14:40:17 |
+|  2 | Priya | priya@gmail.com | 9876543211 | 2003-08-15    |         1 | 88.25 | 2026-07-23 14:40:17 |
+|  3 | Arjun | arjun@gmail.com | 9876543212 | 2002-12-05    |         1 | 76.75 | 2026-07-23 14:40:17 |
++----+-------+-----------------+------------+---------------+-----------+-------+---------------------+
+3 rows in set (0.00 sec)
+
 
 -- 9. Display only names and marks
 SELECT name, marks
-FROM students;
+    -> FROM students;
++-------+-------+
+| name  | marks |
++-------+-------+
+| Rahul | 91.50 |
+| Priya | 88.25 |
+| Arjun | 76.75 |
++-------+-------+
+3 rows in set (0.00 sec)
+
 
 -- 10. Update marks
 UPDATE students
-SET marks = 95.50
-WHERE id = 1;
+    -> SET marks = 95.50
+    -> WHERE id = 1;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
 
 -- 11. Display updated table
 SELECT * FROM students;
++----+-------+-----------------+------------+---------------+-----------+-------+---------------------+
+| id | name  | email           | phone      | date_of_birth | is_active | marks | created_at          |
++----+-------+-----------------+------------+---------------+-----------+-------+---------------------+
+|  1 | Rahul | rahul@gmail.com | 9876543210 | 2004-05-10    |         1 | 95.50 | 2026-07-23 14:40:17 |
+|  2 | Priya | priya@gmail.com | 9876543211 | 2003-08-15    |         1 | 88.25 | 2026-07-23 14:40:17 |
+|  3 | Arjun | arjun@gmail.com | 9876543212 | 2002-12-05    |         1 | 76.75 | 2026-07-23 14:40:17 |
++----+-------+-----------------+------------+---------------+-----------+-------+---------------------+
+3 rows in set (0.00 sec)
+
 
 -- 12. Delete one student
 DELETE FROM students
-WHERE id = 3;
+    -> WHERE id = 3;
+Query OK, 1 row affected (0.01 sec)
+
 
 -- 13. Display remaining students
 SELECT * FROM students;
++----+-------+-----------------+------------+---------------+-----------+-------+---------------------+
+| id | name  | email           | phone      | date_of_birth | is_active | marks | created_at          |
++----+-------+-----------------+------------+---------------+-----------+-------+---------------------+
+|  1 | Rahul | rahul@gmail.com | 9876543210 | 2004-05-10    |         1 | 95.50 | 2026-07-23 14:40:17 |
+|  2 | Priya | priya@gmail.com | 9876543211 | 2003-08-15    |         1 | 88.25 | 2026-07-23 14:40:17 |
++----+-------+-----------------+------------+---------------+-----------+-------+---------------------+
+2 rows in set (0.00 sec)
+
 
 -- 14. Create another table
 CREATE TABLE tasks(
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(200) NOT NULL,
-    description TEXT,
-    priority ENUM('LOW','MEDIUM','HIGH') DEFAULT 'MEDIUM',
-    status ENUM('PENDING','IN_PROGRESS','COMPLETED','CANCELLED') DEFAULT 'PENDING',
-    due_date DATE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    is_archived BOOLEAN DEFAULT FALSE,
-    assignee VARCHAR(100),
-    estimated_hours DECIMAL(5,2),
-    actual_hours DECIMAL(5,2)
-);
+    ->     id INT AUTO_INCREMENT PRIMARY KEY,
+    ->     title VARCHAR(200) NOT NULL,
+    ->     description TEXT,
+    ->     priority ENUM('LOW','MEDIUM','HIGH') DEFAULT 'MEDIUM',
+    ->     status ENUM('PENDING','IN_PROGRESS','COMPLETED','CANCELLED') DEFAULT 'PENDING',
+    ->     due_date DATE,
+    ->     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    ->     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    ->     is_archived BOOLEAN DEFAULT FALSE,
+    ->     assignee VARCHAR(100),
+    ->     estimated_hours DECIMAL(5,2),
+    ->     actual_hours DECIMAL(5,2)
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
 
 -- 15. Display all tables
 SHOW TABLES;
++----------------------+
+| Tables_in_college_db |
++----------------------+
+| students             |
+| tasks                |
++----------------------+
+2 rows in set (0.00 sec)
+
 
 -- 16. Show tasks structure
 DESCRIBE tasks;
++-----------------+-------------------------------------------------------+------+-----+-------------------+-----------------------------------------------+
+| Field           | Type                                                  | Null | Key | Default           | Extra                                         |
++-----------------+-------------------------------------------------------+------+-----+-------------------+-----------------------------------------------+
+| id              | int                                                   | NO   | PRI | NULL              | auto_increment                                |
+| title           | varchar(200)                                          | NO   |     | NULL              |                                               |
+| description     | text                                                  | YES  |     | NULL              |                                               |
+| priority        | enum('LOW','MEDIUM','HIGH')                           | YES  |     | MEDIUM            |                                               |
+| status          | enum('PENDING','IN_PROGRESS','COMPLETED','CANCELLED') | YES  |     | PENDING           |                                               |
+| due_date        | date                                                  | YES  |     | NULL              |                                               |
+| created_at      | timestamp                                             | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED                             |
+| updated_at      | timestamp                                             | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
+| is_archived     | tinyint(1)                                            | YES  |     | 0                 |                                               |
+| assignee        | varchar(100)                                          | YES  |     | NULL              |                                               |
+| estimated_hours | decimal(5,2)                                          | YES  |     | NULL              |                                               |
+| actual_hours    | decimal(5,2)                                          | YES  |     | NULL              |                                               |
++-----------------+-------------------------------------------------------+------+-----+-------------------+-----------------------------------------------+
+12 rows in set (0.00 sec)
+
 
 -- 17. Insert task
 INSERT INTO tasks(title,description,priority,assignee,estimated_hours)
-VALUES(
-'Complete SQL Assignment',
-'Practice all SQL commands',
-'HIGH',
-'Rahul',
-4.50
-);
+    -> VALUES(
+    -> 'Complete SQL Assignment',
+    -> 'Practice all SQL commands',
+    -> 'HIGH',
+    -> 'Rahul',
+    -> 4.50
+    -> );
+Query OK, 1 row affected (0.01 sec)
+
 
 -- 18. View tasks
 SELECT * FROM tasks;
++----+-------------------------+---------------------------+----------+---------+----------+---------------------+---------------------+-------------+----------+-----------------+--------------+
+| id | title                   | description               | priority | status  | due_date | created_at          | updated_at          | is_archived | assignee | estimated_hours | actual_hours |
++----+-------------------------+---------------------------+----------+---------+----------+---------------------+---------------------+-------------+----------+-----------------+--------------+
+|  1 | Complete SQL Assignment | Practice all SQL commands | HIGH     | PENDING | NULL     | 2026-07-23 14:40:17 | 2026-07-23 14:40:17 |           0 | Rahul    |            4.50 |         NULL |
++----+-------------------------+---------------------------+----------+---------+----------+---------------------+---------------------+-------------+----------+-----------------+--------------+
+1 row in set (0.00 sec)
+
 
 -- 19. Delete tasks table
 DROP TABLE IF EXISTS tasks;
+Query OK, 0 rows affected (0.02 sec)
+
 
 -- 20. Delete students table
 DROP TABLE IF EXISTS students;
+Query OK, 0 rows affected (0.02 sec)
+
 
 --22 date
+    ->
+    -> -- Create Database
+    -> CREATE DATABASE college;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '--22 date
 
--- Create Database
-CREATE DATABASE college;
+
+CREATE DATABASE college' at line 1
 
 -- Use Database
 USE college;
+ERROR 1049 (42000): Unknown database 'college'
 
 -- Create Table
 CREATE TABLE students (
-    id INT PRIMARY KEY,
-    name VARCHAR(50),
-    age INT,
-    marks INT
-);
+    ->     id INT PRIMARY KEY,
+    ->     name VARCHAR(50),
+    ->     age INT,
+    ->     marks INT
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
 
 -- Display Table Structure
 DESC students;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| id    | int         | NO   | PRI | NULL    |       |
+| name  | varchar(50) | YES  |     | NULL    |       |
+| age   | int         | YES  |     | NULL    |       |
+| marks | int         | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
 
 -- Insert Records
 INSERT INTO students VALUES
-(1, 'Rahul', 20, 85),
-(2, 'Priya', 19, 90),
-(3, 'Kiran', 21, 78),
-
--- Display All Records
-SELECT * FROM students;
+    -> (1, 'Rahul', 20, 85),
+    -> (2, 'Priya', 19, 90),
+    -> (3, 'Kiran', 21, 78),
+    ->
+    -> -- Display All Records
+    -> SELECT * FROM students;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELECT * FROM students' at line 7
 
 -- Select Specific Columns
 SELECT name AS 'StudentName', age AS 'StudentAge'
-FROM students;
+    -> FROM students;
+Empty set (0.00 sec)
+
 
 -- Display Unique Ages
 SELECT DISTINCT age
-FROM students;
+    -> FROM students;
+Empty set (0.00 sec)
+
 
 -- Display First 5 Rows
 SELECT *
-FROM students
-LIMIT 5;
+    -> FROM students
+    -> LIMIT 5;
+Empty set (0.00 sec)
+
 
 -- Display Rows 6 to 10
 SELECT *
-FROM students
-LIMIT 5 OFFSET 5;
+    -> FROM students
+    -> LIMIT 5 OFFSET 5;
+Empty set (0.00 sec)
+
 
 -- Second Highest Age
 SELECT *
-FROM students
-ORDER BY age DESC
-LIMIT 1 OFFSET 1;
+    -> FROM students
+    -> ORDER BY age DESC
+    -> LIMIT 1 OFFSET 1;
+Empty set (0.00 sec)
+
 
 -- Update One Record
 UPDATE students
-SET age = 21
-WHERE id = 2;
+    -> SET age = 21
+    -> WHERE id = 2;
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
 
 -- Increase Age by 5 Where Age < 20
 UPDATE students
-SET age = age + 5
-WHERE age < 20;
+    -> SET age = age + 5
+    -> WHERE age < 20;
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
 
 -- Display Updated Records
 SELECT * FROM students;
+Empty set (0.00 sec)
+
 
 -- Delete a Specific Record
 DELETE FROM students
-WHERE id = 10;
+    -> WHERE id = 10;
+Query OK, 0 rows affected (0.00 sec)
+
 
 -- Delete Records Where Age < 20
 DELETE FROM students
-WHERE age < 20;
+    -> WHERE age < 20;
+Query OK, 0 rows affected (0.00 sec)
+
 
 -- Display Remaining Records
 SELECT * FROM students;
+Empty set (0.00 sec)
+
 
 -- Delete All Records
 DELETE FROM students;
+Query OK, 0 rows affected (0.00 sec)
+
 
 -- Insert Again After DELETE
 INSERT INTO students VALUES
-(1, 'Rahul', 20, 85),
-(2, 'Priya', 19, 90),
-(3, 'Kiran', 21, 78);
+    -> (1, 'Rahul', 20, 85),
+    -> (2, 'Priya', 19, 90),
+    -> (3, 'Kiran', 21, 78);
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
 
 -- Remove All Rows (Table Structure Remains)
 TRUNCATE TABLE students;
+Query OK, 0 rows affected (0.05 sec)
+
 
 -- Remove Entire Table
 DROP TABLE students;
+Query OK, 0 rows affected (0.03 sec)
+
 
 -- 1. Table Does Not Exist
 SELECT * FROM student;
+ERROR 1146 (42S02): Table 'college_db.student' doesn't exist
 -- Error: Table 'student' doesn't exist
 
 -- 2. Wrong Column Name
 SELECT fullname FROM students;
+ERROR 1146 (42S02): Table 'college_db.students' doesn't exist
 -- Error: Unknown column 'fullname'
 
 -- 3. Duplicate Primary Key
 INSERT INTO students VALUES
-(1, 'Ravi', 22, 88);
+    -> (1, 'Ravi', 22, 88);
+ERROR 1146 (42S02): Table 'college_db.students' doesn't exist
 -- Error: Duplicate entry '1' for key 'PRIMARY'
 
 -- 4. Column Count Mismatch
 INSERT INTO students (id, name)
-VALUES (4);
+    -> VALUES (4);
+ERROR 1146 (42S02): Table 'college_db.students' doesn't exist
 -- Error: Column count doesn't match value count
 
 -- 5. Wrong UPDATE Syntax
 UPDATE students
-age = 25
-WHERE id = 1;
+    -> age = 25
+    -> WHERE id = 1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '= 25
+WHERE id = 1' at line 2
 -- Error: Missing SET keyword
 
 -- Correct Syntax
 UPDATE students
-SET age = 25
-WHERE id = 1;
+    -> SET age = 25
+    -> WHERE id = 1;
+ERROR 1146 (42S02): Table 'college_db.students' doesn't exist
 
 -- 6. Wrong TRUNCATE Spelling
 TRUNCTE TABLE students;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'TRUNCTE TABLE students' at line 1
 -- Error: Syntax error
 
 -- Correct Syntax
 TRUNCATE TABLE students;
+ERROR 1146 (42S02): Table 'college_db.students' doesn't exist
