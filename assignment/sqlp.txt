@@ -104,3 +104,130 @@ DROP TABLE IF EXISTS tasks;
 
 -- 20. Delete students table
 DROP TABLE IF EXISTS students;
+
+--22 date
+
+-- Create Database
+CREATE DATABASE college;
+
+-- Use Database
+USE college;
+
+-- Create Table
+CREATE TABLE students (
+    id INT PRIMARY KEY,
+    name VARCHAR(50),
+    age INT,
+    marks INT
+);
+
+-- Display Table Structure
+DESC students;
+
+-- Insert Records
+INSERT INTO students VALUES
+(1, 'Rahul', 20, 85),
+(2, 'Priya', 19, 90),
+(3, 'Kiran', 21, 78),
+
+-- Display All Records
+SELECT * FROM students;
+
+-- Select Specific Columns
+SELECT name AS 'StudentName', age AS 'StudentAge'
+FROM students;
+
+-- Display Unique Ages
+SELECT DISTINCT age
+FROM students;
+
+-- Display First 5 Rows
+SELECT *
+FROM students
+LIMIT 5;
+
+-- Display Rows 6 to 10
+SELECT *
+FROM students
+LIMIT 5 OFFSET 5;
+
+-- Second Highest Age
+SELECT *
+FROM students
+ORDER BY age DESC
+LIMIT 1 OFFSET 1;
+
+-- Update One Record
+UPDATE students
+SET age = 21
+WHERE id = 2;
+
+-- Increase Age by 5 Where Age < 20
+UPDATE students
+SET age = age + 5
+WHERE age < 20;
+
+-- Display Updated Records
+SELECT * FROM students;
+
+-- Delete a Specific Record
+DELETE FROM students
+WHERE id = 10;
+
+-- Delete Records Where Age < 20
+DELETE FROM students
+WHERE age < 20;
+
+-- Display Remaining Records
+SELECT * FROM students;
+
+-- Delete All Records
+DELETE FROM students;
+
+-- Insert Again After DELETE
+INSERT INTO students VALUES
+(1, 'Rahul', 20, 85),
+(2, 'Priya', 19, 90),
+(3, 'Kiran', 21, 78);
+
+-- Remove All Rows (Table Structure Remains)
+TRUNCATE TABLE students;
+
+-- Remove Entire Table
+DROP TABLE students;
+
+-- 1. Table Does Not Exist
+SELECT * FROM student;
+-- Error: Table 'student' doesn't exist
+
+-- 2. Wrong Column Name
+SELECT fullname FROM students;
+-- Error: Unknown column 'fullname'
+
+-- 3. Duplicate Primary Key
+INSERT INTO students VALUES
+(1, 'Ravi', 22, 88);
+-- Error: Duplicate entry '1' for key 'PRIMARY'
+
+-- 4. Column Count Mismatch
+INSERT INTO students (id, name)
+VALUES (4);
+-- Error: Column count doesn't match value count
+
+-- 5. Wrong UPDATE Syntax
+UPDATE students
+age = 25
+WHERE id = 1;
+-- Error: Missing SET keyword
+
+-- Correct Syntax
+UPDATE students
+SET age = 25
+WHERE id = 1;
+
+-- 6. Wrong TRUNCATE Spelling
+TRUNCTE TABLE students;
+-- Error: Syntax error
+
+-- Correct Syntax
+TRUNCATE TABLE students;
